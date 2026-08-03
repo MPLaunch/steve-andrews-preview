@@ -459,12 +459,14 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closeC
 <!-- MP Launch preview open-tracking — texts Peter when a lead opens this preview -->
 <script>
 (function(){try{
-  if(navigator.webdriver)return;                 /* skip automation / QA */
+  if(navigator.webdriver)return;
+  var v=new URLSearchParams(location.search).get('v');
+  if(!v)return;                                  /* NOT ARMED = no text. Bare URL is silent. */                 /* skip automation / QA */
   var slug="steve-andrews-preview", label="Steve — Steve Andrews Photography", phone="+61425308263";
   var k="mpl_seen_"+slug, last=+localStorage.getItem(k)||0;
   if(Date.now()-last<432e5)return;               /* once per 12h per browser */
   localStorage.setItem(k,String(Date.now()));
-  new Image().src="https://mplaunch.com.au/api/preview-view?slug="+encodeURIComponent(slug)+"&label="+encodeURIComponent(label)+"&phone="+encodeURIComponent(phone)+"&t="+Date.now();
+  new Image().src="https://mplaunch.com.au/api/preview-view?slug="+encodeURIComponent(slug)+"&label="+encodeURIComponent(label)+"&phone="+encodeURIComponent(phone)+"&src="+encodeURIComponent(v)+"&t="+Date.now();
 }catch(e){}})();
 </script>
 </body>
